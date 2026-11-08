@@ -1,153 +1,93 @@
-import { useEffect, useRef } from "react";
 import "./styles/WhatIDo.css";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FaCode, FaWhatsapp, FaVideo, FaPalette, FaImage } from "react-icons/fa6";
 
 const WhatIDo = () => {
-  const containerRef = useRef<(HTMLDivElement | null)[]>([]);
-  const setRef = (el: HTMLDivElement | null, index: number) => {
-    containerRef.current[index] = el;
-  };
-  useEffect(() => {
-    if (ScrollTrigger.isTouch) {
-      containerRef.current.forEach((container) => {
-        if (container) {
-          container.classList.remove("what-noTouch");
-          container.addEventListener("click", () => handleClick(container));
-        }
-      });
-    }
-    return () => {
-      containerRef.current.forEach((container) => {
-        if (container) {
-          container.removeEventListener("click", () => handleClick(container));
-        }
-      });
-    };
-  }, []);
   return (
-    <div className="whatIDO">
-      <div className="what-box">
-        <h2 className="title">
-          W<span className="hat-h2">HAT</span>
-          <div>
-            I<span className="do-h2"> DO</span>
-          </div>
-        </h2>
-      </div>
-      <div className="what-box">
-        <div className="what-box-in">
-          <div className="what-border2">
-            <svg width="100%">
-              <line
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="100%"
-                stroke="white"
-                strokeWidth="2"
-                strokeDasharray="7,7"
-              />
-              <line
-                x1="100%"
-                y1="0"
-                x2="100%"
-                y2="100%"
-                stroke="white"
-                strokeWidth="2"
-                strokeDasharray="7,7"
-              />
-            </svg>
-          </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 0)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="0"
-                  x2="100%"
-                  y2="0"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
-            <div className="what-corner"></div>
+    <div className="whatIDO" id="whatwedo">
+      <div className="what-container section-container">
+        {/* Section Header */}
+        <div className="what-header-row">
+          <span className="what-eyebrow">OUR SERVICES</span>
+          <h2 className="title what-title cyber-heading-glitch">
+            W<span className="hat-h2">HAT</span>{" "}
+            <span>
+              WE<span className="do-h2"> DO</span>
+            </span>
+          </h2>
+          <p className="what-subtitle">
+            Three people, five things we're good at. Here's what each of us
+            works on.
+          </p>
+        </div>
 
-            <div className="what-content-in">
-              <h3>DEVELOP</h3>
-              <h4>Description</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                quia aliquid laboriosam ducimus sit molestiae.
-              </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">JavaScript</div>
-                <div className="what-tags">TypeScript</div>
-                <div className="what-tags">Three.js</div>
-                <div className="what-tags">React</div>
-                <div className="what-tags">Css</div>
-                <div className="what-tags">Node.js</div>
-                <div className="what-tags">Next.js</div>
-                <div className="what-tags">Express.js</div>
-                <div className="what-tags">PHP</div>
-                <div className="what-tags">MySql</div>
-              </div>
-              <div className="what-arrow"></div>
+        {/* Three-person grouped list with soft neon cyberpunk styling */}
+        <div className="what-persons-grid">
+
+          {/* Pushpak: Neon Cyan */}
+          <div className="what-person-block" style={{ "--person-color": "#00f3ff" } as React.CSSProperties}>
+            <div className="what-person-header">
+              <div className="what-person-dot"></div>
+              <h3>Pushpak</h3>
             </div>
+            <ul className="what-service-list">
+              <li>
+                <span className="what-service-icon"><FaCode /></span>
+                <div>
+                  <strong>Website Development</strong>
+                  <p>Fast, mobile-first websites for Goa businesses — built to rank on Google and turn visitors into customers.</p>
+                </div>
+              </li>
+              <li>
+                <span className="what-service-icon"><FaWhatsapp /></span>
+                <div>
+                  <strong>WhatsApp Automation</strong>
+                  <p>Automated replies, booking flows, and catalog sharing — so your business responds to customers even when you're not available.</p>
+                </div>
+              </li>
+            </ul>
           </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 1)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
+
+          {/* Tanay: Neon Purple */}
+          <div className="what-person-block" style={{ "--person-color": "#b026ff" } as React.CSSProperties}>
+            <div className="what-person-header">
+              <div className="what-person-dot"></div>
+              <h3>Tanay</h3>
             </div>
-            <div className="what-corner"></div>
-            <div className="what-content-in">
-              <h3>DESIGN</h3>
-              <h4>Description</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                quia aliquid laboriosam ducimus sit molestiae
-              </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">Blender</div>
-                <div className="what-tags">Zbrush</div>
-                <div className="what-tags">UI Design</div>
-                <div className="what-tags">Motion</div>
-                <div className="what-tags">Rigging</div>
-                <div className="what-tags">3D Animation</div>
-                <div className="what-tags">Character Design</div>
-                <div className="what-tags">Modelling</div>
-              </div>
-              <div className="what-arrow"></div>
-            </div>
+            <ul className="what-service-list">
+              <li>
+                <span className="what-service-icon"><FaVideo /></span>
+                <div>
+                  <strong>Video Editing</strong>
+                  <p>Short-form reels, promotional videos, and brand films edited to hold attention and work on Instagram, YouTube, and WhatsApp.</p>
+                </div>
+              </li>
+            </ul>
           </div>
+
+          {/* Devang: Neon Pink */}
+          <div className="what-person-block" style={{ "--person-color": "#ff007f" } as React.CSSProperties}>
+            <div className="what-person-header">
+              <div className="what-person-dot"></div>
+              <h3>Devang</h3>
+            </div>
+            <ul className="what-service-list">
+              <li>
+                <span className="what-service-icon"><FaPalette /></span>
+                <div>
+                  <strong>Logo Design</strong>
+                  <p>Clean, original logos and brand identities that look good on a shop sign, a phone screen, and everywhere in between.</p>
+                </div>
+              </li>
+              <li>
+                <span className="what-service-icon"><FaImage /></span>
+                <div>
+                  <strong>Digital Images &amp; Ad Creatives</strong>
+                  <p>Social media graphics, promotional banners, and ad creatives designed to get clicks and stop the scroll.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
         </div>
       </div>
     </div>
@@ -155,18 +95,3 @@ const WhatIDo = () => {
 };
 
 export default WhatIDo;
-
-function handleClick(container: HTMLDivElement) {
-  container.classList.toggle("what-content-active");
-  container.classList.remove("what-sibling");
-  if (container.parentElement) {
-    const siblings = Array.from(container.parentElement.children);
-
-    siblings.forEach((sibling) => {
-      if (sibling !== container) {
-        sibling.classList.remove("what-content-active");
-        sibling.classList.toggle("what-sibling");
-      }
-    });
-  }
-}

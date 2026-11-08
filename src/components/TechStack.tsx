@@ -10,6 +10,24 @@ import {
   CylinderCollider,
   RapierRigidBody,
 } from "@react-three/rapier";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  FaReact,
+  FaNodeJs,
+  FaWhatsapp,
+  FaVideo,
+  FaPalette,
+} from "react-icons/fa6";
+import {
+  SiNextdotjs,
+  SiTypescript,
+  SiThreedotjs,
+  SiAdobepremierepro,
+  SiAdobeaftereffects,
+  SiAdobephotoshop,
+  SiAdobeillustrator,
+  SiTailwindcss,
+} from "react-icons/si";
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
@@ -24,10 +42,10 @@ const imageUrls = [
 ];
 const textures = imageUrls.map((url) => textureLoader.load(url));
 
-const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+const sphereGeometry = new THREE.SphereGeometry(1, 24, 24);
 
-const spheres = [...Array(30)].map(() => ({
-  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
+const spheres = [...Array(16)].map(() => ({
+  scale: [0.75, 0.9, 0.85, 1][Math.floor(Math.random() * 4)],
 }));
 
 type SphereProps = {
@@ -48,28 +66,28 @@ function SphereGeo({
   const api = useRef<RapierRigidBody | null>(null);
 
   useFrame((_state, delta) => {
-    if (!isActive) return;
-    delta = Math.min(0.1, delta);
+    if (!isActive || !api.current) return;
+    delta = Math.min(0.08, delta);
     const impulse = vec
-      .copy(api.current!.translation())
+      .copy(api.current.translation())
       .normalize()
       .multiply(
         new THREE.Vector3(
-          -50 * delta * scale,
-          -150 * delta * scale,
-          -50 * delta * scale
+          -40 * delta * scale,
+          -120 * delta * scale,
+          -40 * delta * scale
         )
       );
 
-    api.current?.applyImpulse(impulse, true);
+    api.current.applyImpulse(impulse, true);
   });
 
   return (
     <RigidBody
-      linearDamping={0.75}
-      angularDamping={0.15}
+      linearDamping={0.8}
+      angularDamping={0.2}
       friction={0.2}
-      position={[r(20), r(20) - 25, r(20) - 10]}
+      position={[r(15), r(15) - 20, r(15) - 10]}
       ref={api}
       colliders={false}
     >
@@ -80,8 +98,8 @@ function SphereGeo({
         args={[0.15 * scale, 0.275 * scale]}
       />
       <mesh
-        castShadow
-        receiveShadow
+        castShadow={false}
+        receiveShadow={false}
         scale={scale}
         geometry={sphereGeometry}
         material={material}
@@ -100,7 +118,7 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
   const ref = useRef<RapierRigidBody>(null);
 
   useFrame(({ pointer, viewport }) => {
-    if (!isActive) return;
+    if (!isActive || !ref.current) return;
     const targetVec = vec.lerp(
       new THREE.Vector3(
         (pointer.x * viewport.width) / 2,
@@ -109,7 +127,7 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
       ),
       0.2
     );
-    ref.current?.setNextKinematicTranslation(targetVec);
+    ref.current.setNextKinematicTranslation(targetVec);
   });
 
   return (
@@ -124,33 +142,63 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
   );
 }
 
+// Lightweight mobile skill items
+const mobileTechItems = [
+  { name: "React", icon: FaReact, color: "#00f2fe", category: "Pushpak • Web" },
+  { name: "Next.js", icon: SiNextdotjs, color: "#ffffff", category: "Pushpak • Web" },
+  { name: "TypeScript", icon: SiTypescript, color: "#3178c6", category: "Pushpak • Web" },
+  { name: "Node.js", icon: FaNodeJs, color: "#68a063", category: "Pushpak • Backend" },
+  { name: "Three.js 3D", icon: SiThreedotjs, color: "#f368e0", category: "Pushpak • 3D" },
+  { name: "WhatsApp Cloud API", icon: FaWhatsapp, color: "#25d366", category: "Pushpak • Automation" },
+  { name: "Tailwind CSS", icon: SiTailwindcss, color: "#38bdf8", category: "Pushpak • UI" },
+  { name: "Premiere Pro", icon: SiAdobepremierepro, color: "#ea77ff", category: "Tanay • Video" },
+  { name: "After Effects", icon: SiAdobeaftereffects, color: "#9999ff", category: "Tanay • Motion" },
+  { name: "Viral Reels & Sound", icon: FaVideo, color: "#ff6b81", category: "Tanay • Content" },
+  { name: "Adobe Photoshop", icon: SiAdobephotoshop, color: "#31a8ff", category: "Devang • Visuals" },
+  { name: "Adobe Illustrator", icon: SiAdobeillustrator, color: "#ff9a00", category: "Devang • Branding" },
+  { name: "Brand & Logo Suite", icon: FaPalette, color: "#ffa502", category: "Devang • Identity" },
+];
+
 const TechStack = () => {
   const [isActive, setIsActive] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(
+    typeof window !== "undefined" && window.innerWidth <= 1024
+  );
 
   useEffect(() => {
+    const handleResizeCheck = () => {
+      setIsSmallScreen(window.innerWidth <= 1024);
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener("resize", handleResizeCheck);
+    // Refresh ScrollSmoother layout height after mounting
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
+
+    return () => {
+      window.removeEventListener("resize", handleResizeCheck);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isSmallScreen) return;
+
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
+      const workEl = document.getElementById("work");
+      if (!workEl) return;
+      const threshold = workEl.getBoundingClientRect().top;
       setIsActive(scrollY > threshold);
     };
-    document.querySelectorAll(".header a").forEach((elem) => {
-      const element = elem as HTMLAnchorElement;
-      element.addEventListener("click", () => {
-        const interval = setInterval(() => {
-          handleScroll();
-        }, 10);
-        setTimeout(() => {
-          clearInterval(interval);
-        }, 1000);
-      });
-    });
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isSmallScreen]);
+
   const materials = useMemo(() => {
     return textures.map(
       (texture) =>
@@ -158,34 +206,67 @@ const TechStack = () => {
           map: texture,
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
+          emissiveIntensity: 0.2,
+          metalness: 0.4,
+          roughness: 0.8,
           clearcoat: 0.1,
         })
     );
   }, []);
 
+  // Lightweight layout for mobile/small screens
+  if (isSmallScreen) {
+    return (
+      <div className="techstack techstack-mobile section-container" id="techstack">
+        <div className="techstack-head">
+          <div className="techstack-badge">TOOLKIT & STACK</div>
+          <h2 className="title techstack-mobile-title">
+            STUDIO <span>TECHSTACK</span>
+          </h2>
+          <p className="techstack-subtitle">
+            Industry-leading technologies and creative software powering our web,
+            automation, video, and design deliverables.
+          </p>
+        </div>
+
+        <div className="tech-mobile-grid">
+          {mobileTechItems.map((item, idx) => {
+            const IconComp = item.icon;
+            return (
+              <div
+                key={idx}
+                className="tech-mobile-card"
+                style={{ "--item-color": item.color } as React.CSSProperties}
+              >
+                <div className="tech-mobile-icon-box">
+                  <IconComp />
+                </div>
+                <div className="tech-mobile-info">
+                  <h4>{item.name}</h4>
+                  <span>{item.category}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop 3D Physics layout
   return (
-    <div className="techstack">
-      <h2> My Techstack</h2>
+    <div className="techstack" id="techstack">
+      <h2>STUDIO TECHSTACK & TOOLS</h2>
 
       <Canvas
-        shadows
-        gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+        shadows={false}
+        dpr={[1, 1.5]}
+        gl={{ alpha: true, stencil: false, depth: false, antialias: true }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-        onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
+        onCreated={(state) => (state.gl.toneMappingExposure = 1.3)}
         className="tech-canvas"
       >
-        <ambientLight intensity={1} />
-        <spotLight
-          position={[20, 20, 25]}
-          penumbra={1}
-          angle={0.2}
-          color="white"
-          castShadow
-          shadow-mapSize={[512, 512]}
-        />
+        <ambientLight intensity={1.2} />
         <directionalLight position={[0, 5, -4]} intensity={2} />
         <Physics gravity={[0, 0, 0]}>
           <Pointer isActive={isActive} />
@@ -193,18 +274,18 @@ const TechStack = () => {
             <SphereGeo
               key={i}
               {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
+              material={materials[i % materials.length]}
               isActive={isActive}
             />
           ))}
         </Physics>
         <Environment
           files="/models/char_enviorment.hdr"
-          environmentIntensity={0.5}
+          environmentIntensity={0.4}
           environmentRotation={[0, 4, 2]}
         />
         <EffectComposer enableNormalPass={false}>
-          <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
+          <N8AO color="#0f002c" aoRadius={2} intensity={0.8} />
         </EffectComposer>
       </Canvas>
     </div>

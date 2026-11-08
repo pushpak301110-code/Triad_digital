@@ -1,71 +1,124 @@
+/* =====================================================
+   About Section — Cyberpunk Theme
+   ===================================================== */
 .about-section {
   display: flex;
   align-items: center;
-  justify-content: left;
-  place-items: center;
+  justify-content: center;
   position: relative;
   opacity: 1;
-  height: auto;
+  min-height: 70vh;
   width: var(--cWidth);
-  margin: auto;
+  margin: 60px auto;
+  padding: 40px 0;
 }
-.about-me {
-  padding: 50px 0px;
-  padding-bottom: 0;
-  width: 500px;
-  max-width: calc(100% - 15px);
+
+.about-content-wrap {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
 }
-.about-me h3 {
-  font-size: 25px;
+
+.about-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 4px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 7px;
-  font-weight: 400;
-  color: var(--accentColor);
+  color: var(--cyberCyan);
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+  margin-bottom: 14px;
 }
 
-.about-me p {
-  font-size: 33px;
+.about-section h3.title {
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 6px;
   font-weight: 600;
-  line-height: 36px;
-  letter-spacing: 1px;
+  color: var(--cyberCyan);
+  margin: 0 0 20px 0;
+  text-shadow: 0 0 14px rgba(0, 243, 255, 0.4);
 }
 
-@media only screen and (min-width: 600px) {
-  .about-section {
-    justify-content: center;
-  }
+.about-main-p {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
+  color: #fff;
+  margin: 0 0 22px 0;
 }
+
+.about-secondary-p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #a49ea8;
+  margin: 0 0 20px 0;
+  max-width: 820px;
+}
+
+/* Three member cards with soft neon glow */
+.about-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.about-highlight-card {
+  background: var(--cyberCardBg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--card-accent, #00f3ff);
+  border-radius: 16px;
+  padding: 22px 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.7);
+}
+
+.about-highlight-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.6),
+    0 0 20px -5px var(--card-accent, #00f3ff);
+  border-color: color-mix(in srgb, var(--card-accent, #00f3ff) 40%, transparent);
+}
+
+.about-card-num {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--card-accent, #00f3ff);
+  margin-bottom: 8px;
+  font-family: monospace;
+  text-shadow: 0 0 8px var(--card-accent, #00f3ff);
+}
+
+.about-highlight-card h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #fff;
+}
+
+.about-highlight-card p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #9d94a7;
+  margin: 0;
+}
+
+/* Responsive */
 @media only screen and (min-width: 768px) {
-  .about-me {
-    width: 500px;
-    max-width: calc(100% - 70px);
-    transform: translateY(0%);
-  }
-  .about-section {
-    opacity: 1;
-  }
+  .about-main-p { font-size: 36px; }
 }
-@media only screen and (min-width: 1025px) {
-  .about-section {
-    width: var(--cWidth);
-    justify-content: right;
-    max-width: 1920px;
-    height: var(--vh);
-    padding: 0px;
-    opacity: 1;
-  }
-  .about-me {
-    padding: 0px;
-    width: 50%;
-  }
-  .about-me p {
-    font-size: 1.9vw;
-    line-height: 2.3vw;
-  }
+@media only screen and (min-width: 1200px) {
+  .about-main-p { font-size: 42px; }
 }
-@media only screen and (min-width: 1950px) {
-  .about-me p {
-    font-size: 2.5rem;
-    line-height: 2.7rem;
-  }
+@media only screen and (max-width: 480px) {
+  .about-main-p { font-size: 24px; }
+  .about-secondary-p { font-size: 15px; }
 }

@@ -1,9 +1,14 @@
+/* =====================================================
+   Navbar — Triad Digital Cyberpunk Theme
+   ===================================================== */
+
 .header {
   display: flex;
   max-width: var(--cMaxWidth);
   width: var(--cWidth);
   justify-content: space-between;
-  padding: 20px 0px;
+  align-items: center;
+  padding: 18px 0;
   margin-bottom: -100px;
   box-sizing: border-box;
   position: fixed;
@@ -12,72 +17,182 @@
   top: 0;
   z-index: 9999;
 }
-.header ul {
-  font-size: 12px;
+
+/* ---- Desktop nav list ---- */
+.navbar-desktop-links {
+  font-size: 11px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   margin: 0;
   padding: 0;
   list-style: none;
-  column-gap: 40px;
-  row-gap: 8px;
-  align-items: end;
+  column-gap: 18px;
+  row-gap: 6px;
+  align-items: center;
 }
-.header ul li {
-  margin-left: 0px;
-  letter-spacing: 1px;
+.navbar-desktop-links li {
+  margin-left: 0;
+  letter-spacing: 1.5px;
   color: #ccc;
   font-weight: 600;
   cursor: pointer;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
-.navbar-connect {
-  position: absolute;
-  display: none;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 15px;
-  letter-spacing: 1px;
-  font-weight: 500;
+.navbar-desktop-links li:hover {
+  color: var(--cyberCyan);
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
 }
+
+/* ---- Logo / title ---- */
 .navbar-title {
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.navbar-title-trio,
+.navbar-title-triad {
+  background: linear-gradient(135deg, #00f3ff, #b026ff, #ff007f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.4));
+}
+
+/* ---- Mobile hamburger button ---- */
+.navbar-mobile-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(8, 7, 13, 0.8);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  border-radius: 10px;
+  color: #eae5ec;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.15);
+  display: none;
+}
+.navbar-mobile-toggle:hover,
+.navbar-mobile-toggle:active {
+  background: rgba(0, 243, 255, 0.12);
+  border-color: var(--cyberCyan);
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+}
+
+/* ---- Mobile fullscreen drawer with Cyberpunk styling ---- */
+.navbar-mobile-drawer {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 3, 6, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  padding: 20px var(--cWidth);
+  box-sizing: border-box;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-12px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  border-bottom: 2px solid var(--cyberCyan);
+}
+.mobile-drawer-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(0, 243, 255, 0.15);
+  margin-bottom: 32px;
+}
+.mobile-drawer-brand {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.mobile-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 0, 127, 0.3);
+  border-radius: 10px;
+  color: var(--cyberPink);
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
+}
+
+.navbar-mobile-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.navbar-mobile-links li a {
+  display: block;
+  padding: 14px 0;
+  font-size: 22px;
   font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.2px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #eae5ec;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: color 0.2s ease, padding-left 0.2s ease, text-shadow 0.2s ease;
 }
-@media only screen and (min-width: 500px) {
-  .header {
-    padding: 20px 0px;
-  }
-  .header ul {
-    flex-direction: row;
-    align-items: center;
-    font-size: 14px;
-  }
-  .header ul li {
-    color: #eae5ec;
-  }
-  .navbar-title {
-    font-size: 16px;
-  }
+.navbar-mobile-links li a:hover,
+.navbar-mobile-links li a:active {
+  color: var(--cyberCyan);
+  padding-left: 10px;
+  text-shadow: 0 0 12px var(--cyberCyan);
 }
+
+/* =============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================= */
+
+@media only screen and (min-width: 600px) {
+  .header { padding: 20px 0; }
+  .navbar-desktop-links { font-size: 12px; column-gap: 22px; }
+  .navbar-title { font-size: 18px; }
+}
+
+@media only screen and (min-width: 768px) {
+  .navbar-desktop-links { display: flex; }
+}
+
 @media only screen and (min-width: 900px) {
-  .navbar-connect {
-    display: block;
-  }
+  .navbar-desktop-links { font-size: 13px; column-gap: 26px; }
 }
+
 @media only screen and (min-width: 1200px) {
-  .header {
-    padding: 35px 0px;
-  }
-  .header ul {
-    column-gap: 80px;
-    font-size: 16px;
-  }
-  .navbar-connect {
-    font-size: 16px;
-  }
-  .navbar-title {
-    font-size: 18px;
-  }
+  .header { padding: 28px 0; }
+  .navbar-desktop-links { column-gap: 36px; font-size: 14px; }
+  .navbar-title { font-size: 20px; }
+}
+
+@media only screen and (max-width: 767px) {
+  .navbar-desktop-links { display: none; }
+  .navbar-mobile-toggle { display: flex; }
 }

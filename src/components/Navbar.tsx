@@ -1,75 +1,94 @@
-import { useEffect } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
 import HoverLinks from "./HoverLinks";
-import { gsap } from "gsap";
-import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
+import { FaBars, FaXmark } from "react-icons/fa6";
 import "./styles/Navbar.css";
 
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
+const navItems = [
+  { label: "ABOUT",      href: "#about"    },
+  { label: "WHAT WE DO", href: "#whatwedo" },
+  { label: "WORK",       href: "#work"     },
+  { label: "CONTACT",    href: "#contact"  },
+];
 
 const Navbar = () => {
-  useEffect(() => {
-    smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
-      autoResize: true,
-      ignoreMobileResize: true,
-    });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    smoother.scrollTop(0);
-    smoother.paused(true);
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    const targetEl = document.querySelector(href);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
-    let links = document.querySelectorAll(".header ul a");
-    links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
-        if (window.innerWidth > 1024) {
-          e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
-        }
-      });
-    });
-    window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
-    });
-  }, []);
   return (
     <>
-      <div className="header">
+      <header className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          Logo
+          <span className="navbar-title-trio">TRIAD</span> DIGITAL
         </a>
-        <a
-          href="mailto:example@mail.com"
-          className="navbar-connect"
-          data-cursor="disable"
-        >
-          example@mail.com
-        </a>
-        <ul>
-          <li>
-            <a data-href="#about" href="#about">
-              <HoverLinks text="ABOUT" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#work" href="#work">
-              <HoverLinks text="WORK" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#contact" href="#contact">
-              <HoverLinks text="CONTACT" />
-            </a>
-          </li>
+
+        {/* Desktop nav links */}
+        <ul className="navbar-desktop-links">
+          {navItems.map((item) => (
+            <li key={item.href}>
+              <a
+                data-href={item.href}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+              >
+                <HoverLinks text={item.label} />
+              </a>
+            </li>
+          ))}
         </ul>
-      </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="navbar-mobile-toggle"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle navigation menu"
+        >
+          {mobileMenuOpen ? <FaXmark /> : <FaBars />}
+        </button>
+
+        {/* Mobile drawer */}
+        <div
+          className={`navbar-mobile-drawer ${
+            mobileMenuOpen ? "mobile-drawer-open" : ""
+          }`}
+        >
+          <div className="mobile-drawer-header">
+            <span className="mobile-drawer-brand">
+              <span className="navbar-title-trio">TRIAD</span> DIGITAL
+            </span>
+            <button
+              className="mobile-drawer-close"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              <FaXmark />
+            </button>
+          </div>
+
+          <ul className="navbar-mobile-links">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </header>
 
       <div className="landing-circle1"></div>
       <div className="landing-circle2"></div>

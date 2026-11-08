@@ -2,15 +2,13 @@
 
 :root {
   font-family: "Geist", sans-serif;
-
   font-optical-sizing: auto;
   font-style: normal;
   line-height: 1.5;
   scroll-behavior: smooth;
-  color-scheme: light dark;
+  color-scheme: dark;
   color: #eae5ec;
   background-color: var(--backgroundColor);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,29 +16,85 @@
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  --accentColor: #c2a4ff;
-  --backgroundColor: #0b080c;
+
+  /* Cyberpunk Neon Palette */
+  --accentColor: #00f3ff;
+  --cyberCyan: #00f3ff;
+  --cyberPink: #ff007f;
+  --cyberPurple: #b026ff;
+  --backgroundColor: #040306;
+  --cyberCardBg: rgba(8, 7, 13, 0.75);
+  --cyberBorder: rgba(0, 243, 255, 0.15);
+
   --vh: 100vh;
   --vh: 100svh;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+
+h1, h2, h3, h4, h5, h6 {
   font-family: "Geist", sans-serif;
 }
-body {
-  overflow: hidden;
+
+/* Subtle, smooth Cyberpunk Glitch for Headings */
+@keyframes cyberGlitch {
+  0%, 100% {
+    text-shadow: 0 0 0 transparent;
+    transform: translate(0);
+  }
+  18% {
+    text-shadow: 0 0 0 transparent;
+  }
+  20% {
+    text-shadow: -1.5px 0 var(--cyberCyan), 1.5px 0 var(--cyberPink);
+    transform: translate(-0.5px, 0.5px);
+  }
+  22% {
+    text-shadow: 0 0 0 transparent;
+    transform: translate(0);
+  }
+  64% {
+    text-shadow: 0 0 0 transparent;
+  }
+  66% {
+    text-shadow: 1.5px 0 var(--cyberCyan), -1.5px 0 var(--cyberPurple);
+    transform: translate(0.5px, -0.5px);
+  }
+  68% {
+    text-shadow: 0 0 0 transparent;
+    transform: translate(0);
+  }
 }
+
+.cyber-heading-glitch {
+  animation: cyberGlitch 5s infinite ease-in-out;
+  will-change: transform, text-shadow;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  background-color: var(--backgroundColor);
+}
+
+body {
+  margin: 0;
+  height: auto;
+  background-color: var(--backgroundColor);
+  flex-grow: 1;
+  --cWidth: calc(100% - 30px);
+  --cMaxWidth: 1920px;
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 a {
   color: inherit;
   text-decoration: inherit;
 }
 a:hover {
-  color: var(--accentColor);
+  color: var(--cyberCyan);
 }
+
 main {
   opacity: 1;
   transition: 0.3s;
@@ -51,23 +105,13 @@ main {
   animation-fill-mode: forwards;
 }
 @keyframes fadeIn {
-  100% {
-    opacity: 1;
-  }
+  100% { opacity: 1; }
 }
-body {
-  margin: 0;
-  height: auto;
-  background-color: #000;
-  flex-grow: 1;
-  --cWidth: calc(100% - 30px);
-  --cMaxWidth: 1920px;
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+
 .main-body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-color: var(--backgroundColor);
 }
 
 .container-main {
@@ -75,12 +119,14 @@ body {
   margin: auto;
   position: relative;
 }
+
 .container1 {
   width: var(--cWidth);
   height: var(--vh);
   margin: auto;
   position: relative;
 }
+
 .split-line {
   overflow: hidden;
 }
@@ -91,33 +137,8 @@ body {
   flex-wrap: nowrap;
 }
 
-.techstack {
-  width: 100%;
-  position: relative;
-  height: var(--vh);
-  margin: auto;
-  margin-top: 50px;
-  margin-bottom: -100px;
-}
-
-.techstack h2 {
-  font-size: 80px;
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  top: 120px;
-  left: 0;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
 @media screen and (min-width: 768px) {
   body {
     --cWidth: 94%;
-  }
-}
-@media screen and (max-width: 900px) {
-  .techstack h2 {
-    font-size: 40px;
   }
 }
