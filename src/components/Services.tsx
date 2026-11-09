@@ -194,4 +194,5 @@ className="service-inquire-btn"
 </div>
 );
 };
+export default Services;
 
