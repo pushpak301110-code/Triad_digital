@@ -161,38 +161,37 @@ const Services = () => {
                 <h3 className="service-card-title">{service.title}</h3>
                 <p className="service-card-desc">{service.description}</p>
 
-                <div className="service-deliverables">
-                  <h5>What's Included:</h5>
-                  <ul>
-                    {service.deliverables.map((item, idx) => (
-                      <li key={idx}>
-                        <span className="service-check">✓</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="service-deliverables">
+<h5>What's Included:</h5>
+<ul>
+{service.deliverables.map((item, idx) => (
+<li key={idx}>
+<span className="service-check">✓</span>
+<span>{item}</span>
+</li>
+))}
+</ul>
+</div>
 
-                <div className="service-card-footer">
-                  <a
-                    href={`mailto:triaddigital9@gmail.com
-                      `Hi Triad Digital! I'm interested in your ${service.title} service.`
-                    )}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="service-inquire-btn"
-                  >
-                    <span>Inquire on WhatsApp</span>
-                    <FaArrowRight className="service-btn-arrow" />
-                  </a>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
+<div className="service-card-footer">
+<a
+href={`https://wa.me/YOURNUMBER?text=${encodeURIComponent(
+`Hi Triad Digital! I'm interested in your ${service.title} service.`
+)}`}
+target="_blank"
+rel="noreferrer"
+className="service-inquire-btn"
+>
+<span>Inquire on WhatsApp</span>
+<FaArrowRight className="service-btn-arrow" />
+</a>
+</div>
+</div>
+);
+})}
+</div>
+</div>
+</div>
+);
 };
 
-export default Services;
